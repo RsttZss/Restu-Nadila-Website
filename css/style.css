@@ -279,3 +279,46 @@ section {
     margin-top: 15px;
   }
 }
+@media (max-width: 768px) {
+  .row, .grid {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+
+  body {
+    font-size: 14px;
+  }
+
+  header, section, footer {
+    padding: 16px;
+  }
+
+  nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .service-card,
+  .card,
+  .box {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 { font-size: 24px; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 18px; }
+}
