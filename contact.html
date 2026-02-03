@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
+
+.countdown-box {
+    margin-top: 2rem;
+}
+
+.countdown-item {
+    transition: all 0.4s ease;
+}
+
+.countdown-item:hover {
+    transform: translateY(-6px);
+}
+
+.purple-glow {
+    background: rgba(212, 0, 255, 0.15);
+    box-shadow: 0 0 15px rgba(212, 0, 255, 0.4);
+}
+
+.countdown-item h3 {
+    color: rgb(212, 0, 255);
+    text-shadow: 0 0 8px rgba(212, 0, 255, 0.7);
+}
+
+.countdown-item p {
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.romantic-text {
+    font-style: italic;
+    color: #e0c8ff;
+}
+        
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url("./img/bg2.jpg");
+            background-size: cover;
+            overflow: auto;
+            position: relative;
+        }
+
+        nav {
+            width: 100%;
+            height: 10vh;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: rgb(212, 0, 255);
+            text-shadow: 0 0 10px rgb(212, 0, 255);
+        }
+
+        .hamburg,
+        .cancel {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: white;
+            display: none;
+            font-size: clamp(2.5rem, 0.5rem + 5vw, 3rem);
+        }
+
+        .nav-container .links {
+            display: flex;
+        }
+
+        .nav-container .links a {
+            font-size: 1.2rem;
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 550;
+            transition: 0.3s linear;
+        }
+
+        .nav-container .links a:hover {
+            color: rgb(212, 0, 255);
+            border-bottom: 2px solid rgb(212, 0, 255);
+        }
+
+        .nav-container .links .active {
+            color: rgb(212, 0, 255);
+            border-bottom: 2px solid rgb(212, 0, 255);
+        }
+
+        .dropdown {
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(-500px);
+            width: 100%;
+            height: auto;
+            backdrop-filter: blur(4px) brightness(40%);
+            box-shadow: 0 0 20px black;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a {
+            display: flex;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a:hover {
+            background-color: rgb(212, 0, 255);
+        }
+
+        /* Contact Section Styles */
+        .contact-container {
+            width: 100%;
+            min-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .contact-content {
+            width: 80%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            padding-right: 2rem;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+            color: rgb(212, 0, 255);
+            text-shadow: 0 0 10px rgb(212, 0, 255);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-details {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(58, 211, 3, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+        }
+
+        .contact-icon i {
+            font-size: 1.5rem;
+            color: rgb(212, 0, 255);
+        }
+
+        .contact-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-text p {
+            color: #cccccc;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(58, 211, 3, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: rgb(212, 0, 255);
+            box-shadow: 0 0 10px rgba(58, 211, 3, 0.3);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            color: #cccccc;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .form-group input:focus~label,
+        .form-group input:valid~label,
+        .form-group textarea:focus~label,
+        .form-group textarea:valid~label {
+            top: -0.5rem;
+            left: 0.8rem;
+            font-size: 0.8rem;
+            padding: 0 0.5rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: rgb(212, 0, 255);
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: rgb(212, 0, 255);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            box-shadow: 0 0 20px rgba(58, 211, 3, 0.5);
+            border: 2px solid rgb(212, 0, 255);
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(58, 211, 3, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgb(212, 0, 255);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgb(212, 0, 255);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(58, 211, 3, 0.5);
+        }
+
+        @media (max-height: 800px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .contact-container {
+                height: auto;
+                min-height: 90vh;
+            }
+        }
+
+        @media (max-width: 884px) {
+            nav .logo {
+                position: absolute;
+                top: 16px;
+                left: 15px;
+                font-size: 1.5rem;
+            }
+
+            .nav-container .links {
+                display: none;
+            }
+
+            .hamburg,
+            .cancel {
+                display: block;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-info {
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .contact-container {
+                padding: 1rem;
+            }
+
+            .contact-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .contact-header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    .kuromi-side {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kuromi {
+    position: absolute;
+    width: 160px;
+    opacity: 0.85;
+    filter: drop-shadow(0 0 20px rgba(212, 0, 255, 0.6));
+    animation: float 6s ease-in-out infinite;
+}
+
+.kuromi-1 {
+    top: 10%;
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.kuromi-2 {
+    bottom: 15%;
+    right: 20%;
+    width: 130px;
+    animation-delay: 2s;
+}
+
+.kuromi-3 {
+    top: 45%;
+    right: 35%;
+    width: 100px;
+    animation-delay: 4s;
+}
+
+/* FLOAT ANIMATION */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
+
+/* RESPONSIVE: sembunyikan di HP */
+@media (max-width: 884px) {
+    .kuromi-side {
+        display: none;
+    }
+}
+.kuromi-1 {
+    top: 10%;
+    left: 20%;
+}
+
+.kuromi-2 {
+    bottom: 10%;
+    right: 15%;
+    max-width: 130px;
+}
+
+.kuromi-3 {
+    top: 45%;
+    left: 45%;
+    max-width: 100px;
+}
+
+/* Animasi lembut */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0); }
+}
+
+.kuromi {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* MOBILE: sembunyikan */
+@media (max-width: 884px) {
+    .kuromi-side {
+        display: none;
+    }
+}
+.single-center {
+    grid-template-columns: 1fr !important;
+    justify-items: center;
+}
+
+/* Card harapan */
+.hope-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    max-width: 720px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(212, 0, 255, 0.25);
+}
+
+/* Teks */
+.hope-text {
+    font-size: 1.15rem;
+    line-height: 2;
+    letter-spacing: 0.6px;
+}
+
+/* Animasi per baris (tetap) */
+.hope-text span {
+    display: block;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: hopeFade 1.2s ease forwards;
+    color: #e6ccff;
+    text-shadow: 0 0 12px rgba(212, 0, 255, 0.35);
+}
+
+.hope-text span:nth-child(1) { animation-delay: 1.2s; }
+.hope-text span:nth-child(2) { animation-delay: 2s; }
+.hope-text span:nth-child(3) { animation-delay: 1.9s; }
+.hope-text span:nth-child(4) { animation-delay: 2.7s; }
+
+@keyframes hopeFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    </style>
+    <title>Contact - Portfolio Website</title>
+</head>
+
+<body>
+    <audio id="bgMusic" preload="auto">
+  <source src="audio/nadin1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const audio = document.getElementById("bgMusic");
+
+  // Lanjutkan dari posisi terakhir
+  const savedTime = localStorage.getItem("musicTime");
+  if (savedTime) audio.currentTime = parseFloat(savedTime);
+
+  // Autoplay (akan play jika browser mengizinkan)
+  function playMusic() {
+    audio.play().catch(() => {});
+  }
+
+  window.addEventListener("load", playMusic);
+
+  // Simpan waktu lagu
+  audio.addEventListener("timeupdate", () => {
+    localStorage.setItem("musicTime", audio.currentTime);
+  });
+
+  // Ulangi lagu saat habis
+  audio.addEventListener("ended", () => {
+    audio.currentTime = 0;
+    audio.play();
+  });
+
+  /* ===============================
+     PAUSE SAAT MENINGGALKAN WEB
+     =============================== */
+
+  // Saat tab tidak aktif
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      audio.pause();
+      localStorage.setItem("musicPaused", "true");
+    } else {
+      const wasPaused = localStorage.getItem("musicPaused");
+      if (wasPaused === "true") {
+        playMusic();
+        localStorage.setItem("musicPaused", "false");
+      }
+    }
+  });
+
+  // Saat benar-benar keluar / reload
+  window.addEventListener("beforeunload", () => {
+    localStorage.setItem("musicTime", audio.currentTime);
+    audio.pause();
+  });
+</script>
+    <nav>
+        <div class="nav-container">
+            <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
+                Restu <span>Nadila</span>
+            </div>
+            <div class="links">
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100"><a
+                        href="index.html">Home</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200"><a
+                        href="about.html">About Us</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400"><a
+                        href="service.html">Our Memory</a></div>
+                <div class="link active" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500"><a
+                        href="contact.html">Countdown</a></div>
+            </div>
+        </div>
+        <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        <div class="dropdown">
+            <div class="links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="service.html">Our Memory</a>
+                <a href="contact.html">Countdown</a>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="contact-container">
+        <div class="contact-content">
+            <div class="kuromi-side" data-aos="fade-left" data-aos-duration="1500">
+    <img src="img/kuro.png" class="kuromi kuromi-1">
+    <img src="img/love.png" class="kuromi kuromi-3">
+    <img src="img/maru.png" class="kuromi kuromi-2">
+</div>
+            <div class="contact-info">
+                <div class="contact-header" data-aos="fade-right" data-aos-duration="1500">
+                    <h1>Get in Touch</h1>
+                    <p>Feel free to reach out to me for any questions or opportunities.</p>
+                    <h1></h1>
+                </div>
+                        <div class="contact-item countdown-item" data-aos="fade-right" data-aos-duration="1500">
+    <div class="contact-icon purple-glow">
+        <i class="fas fa-hourglass-half"></i>
+    </div>
+    <div class="contact-text">
+        <h3>Menuju 11 November</h3>
+        <p id="countdown">Loading...</p>
+    </div>
+</div>
+
+<!-- ELAPSED TIME -->
+<div class="contact-item countdown-item" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="200">
+    <div class="contact-icon purple-glow">
+        <i class="fas fa-heart"></i>
+    </div>
+    <div class="contact-text">
+        <h3>Sejak 11 November 2024</h3>
+        <p id="elapsed">Loading...</p>
+    </div>
+</div>
+                    </div>
+                    <div class="hope-inline">
+    <p class="hope-text">
+        <span>Semoga semua mimpi kita bisa terwujud, semua nya berakhir bahagia dalam hubgungan yang abadi.</span>
+        <span></span>
+        <span>Dan semoga kita bisa saling memafkan dan mendukung di kemudian hari💜</span>
+    </p>
+</div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ offset: 0, });
+    </script>
+    <script src="./js/script.js"></script>
+    <script>
+function updateCountdown() {
+    const now = new Date();
+
+    const currentYear = now.getFullYear();
+    let targetDate = new Date(`November 11, ${currentYear} 00:00:00`);
+
+    // Jika 11 November tahun ini sudah lewat, pakai tahun depan
+    if (now > targetDate) {
+        targetDate = new Date(`November 11, ${currentYear + 1} 00:00:00`);
+    }
+
+    const startDate = new Date("November 11, 2024 00:00:00");
+
+    /* ================= COUNTDOWN ================= */
+    const distance = targetDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        `${days} hari • ${hours} jam • ${minutes} menit • ${seconds} detik`;
+
+    /* ================= ELAPSED TIME ================= */
+    const elapsed = now - startDate;
+
+    const eDays = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+    const eHours = Math.floor((elapsed / (1000 * 60 * 60)) % 24);
+    const eMinutes = Math.floor((elapsed / (1000 * 60)) % 60);
+
+    document.getElementById("elapsed").innerHTML =
+        `${eDays} hari • ${eHours} jam • ${eMinutes} menit`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+    
+</body>
+
+</html>
+<!-- Subscrbe YouTube Tamzidan Mahdiyin  -->
